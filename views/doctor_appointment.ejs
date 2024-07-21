@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab&family=Ubuntu&display=swap" rel="stylesheet">
+<title>Doc-fnt-pg</title>
+</head>
+<body>
+
+<div class="navbar">
+  <span class="nav-left">
+    <a href="#" class="navbar-logo">MediLance</a>
+    <input type="text" placeholder="Search" class="navbar-search">
+  </span>
+  <span class="nav-right">
+    <a href="/doctor/home">Home</a>
+    <a href="/doctor/patient">Patients</a>
+    <a href="#">Appointments</a>
+    <a href="/chat">Messaging</a>
+    <a href="/signout">Sign Out</a>
+</span>
+</div>
+<div id="container">
+  <div class="profile-card">
+    <img src="/img/user.png" alt="Profile Picture" class="profile-image">
+    <div class="profile-info">
+      <form action="/patient/profile" method="get">
+        <div class="profile-name"><input type="submit" value="<%=name%>"></div>
+        <div class="profile-title"><%=specilization%></div>
+      </form>
+    </div>
+  </div>
+  <div id="centre-content">
+    <div id="content"></div>
+  </div>
+  <div id="right-suggestion">
+    <div class="suggested-profile">
+      <img src="/img/doctor.png" alt="Suggested Profile 1" class="suggested-profile-image">
+      <div class="suggested-profile-info">
+        <div class="suggested-profile-name">Dr.Samantha Smith</div>
+        <div class="suggested-profile-title">ENT Specialist</div>
+      </div>
+      <button class="add-connection-button">Contact</button>
+    </div>
+    <div class="suggested-profile">
+      <img src="/img/doctor.png" alt="Suggested Profile 1" class="suggested-profile-image">
+      <div class="suggested-profile-info">
+        <div class="suggested-profile-name">Dr.Alok Ray</div>
+        <div class="suggested-profile-title">Eye Specialist</div>
+      </div>
+      <button class="add-connection-button">Contact</button>
+    </div>
+    <div class="suggested-profile">
+      <img src="/img/doctor.png" alt="Suggested Profile 1" class="suggested-profile-image">
+      <div class="suggested-profile-info">
+        <div class="suggested-profile-name">Dr.Dinesh Chowdhary</div>
+        <div class="suggested-profile-title">Neuro surgeon</div>
+      </div>
+      <button class="add-connection-button">Contact</button>
+    </div>
+    <div class="suggested-profile">
+      <img src="/img/doctor.png" alt="Suggested Profile 1" class="suggested-profile-image">
+      <div class="suggested-profile-info">
+        <div class="suggested-profile-name">Dr.Rakesh Varma</div>
+        <div class="suggested-profile-title">Dentist</div>
+      </div>
+      <button class="add-connection-button">Contact</button>
+    </div>
+    <!-- Add more suggested profiles here -->
+  </div>
+  
+</div>
+
+</body>
+<script>
+  const appointmentsContainer = document.getElementById('content');
+
+  // Fetch appointments from the backend API
+  fetch('/getDoctorAppointments')
+      .then(response => response.json())
+      .then(appointments => {
+          appointments.forEach(appointment => {
+              // Create and append an appointment element
+              const appointmentElement = document.createElement('div');
+              appointmentElement.classList.add('post');
+              appointmentElement.innerHTML = `
+                  <p><strong>Patient: </strong>${appointment.patient.details.name}</p>
+                  <p><strong>Date,Time: </strong> ${new Date(appointment.timeStamp).toLocaleString()}</p>
+                  <p><strong>Status: </strong> ${appointment.status}</p>
+                  <p><strong>Content: </strong> ${appointment.content}</p>
+              `;
+              appointmentsContainer.appendChild(appointmentElement);
+          });
+      })
+      .catch(error => {
+          console.error('Error fetching appointments:', error);
+      });
+</script>
+</html>

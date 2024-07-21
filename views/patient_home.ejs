@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab&family=Ubuntu&display=swap" rel="stylesheet">
+<title>Doc-fnt-pg</title>
+</head>
+<body>
+
+<div class="navbar">
+  <span class="nav-left">
+    <a href="#" class="navbar-logo">MediLance</a>
+    <input type="text" placeholder="Search" class="navbar-search">
+  </span>
+  <span class="nav-right">
+    <a href="#">Home</a>
+    <a href="/patient/patient_doctors">Doctors</a>
+    <a href="/patient/appointment">Appointments</a>
+    <a href="/chat">Messaging</a>
+
+    <a href="/">Sign Out</a>
+</span>
+</div>
+<div id="container">
+  <div class="profile-card">
+    <img src="/img/user.png" alt="Profile Picture" class="profile-image">
+    <div class="profile-info">
+      <form action="/patient/profile" method="get">
+        <div class="profile-name"><input type="submit" value="<%=name%>"></div>
+        <div class="profile-title"><%=specilization%></div>
+      </form>
+    </div>
+  </div>
+  <div id="centre-content">
+    <div id="create_post">
+      <div class="left">
+        <img src="/img/doctor.png" alt="Profile Picture" class="profile-image">
+      </div>
+      <div class="right">
+        <form action="/patient/post" method="get">
+          <input type="submit" value="Consult a doctor...">
+        </form>
+      </div>
+    </div>
+    <div id="content"></div>
+  </div>
+  <div id="right-suggestion">
+    <div class="suggested-profile">
+      <img src="/img/doctor.png" alt="Suggested Profile 1" class="suggested-profile-image">
+      <div class="suggested-profile-info">
+        <div class="suggested-profile-name">Dr.Samantha Smith</div>
+        <div class="suggested-profile-title">ENT Specialist</div>
+      </div>
+      <button class="add-connection-button">Connect</button>
+    </div>
+    <div class="suggested-profile">
+      <img src="/img/doctor.png" alt="Suggested Profile 1" class="suggested-profile-image">
+      <div class="suggested-profile-info">
+        <div class="suggested-profile-name">Dr.Alok Ray</div>
+        <div class="suggested-profile-title">Eye Specialist</div>
+      </div>
+      <button class="add-connection-button">Connect</button>
+    </div>
+    <div class="suggested-profile">
+      <img src="/img/doctor.png" alt="Suggested Profile 1" class="suggested-profile-image">
+      <div class="suggested-profile-info">
+        <div class="suggested-profile-name">Dr.Dinesh Chowdhary</div>
+        <div class="suggested-profile-title">Neuro surgeon</div>
+      </div>
+      <button class="add-connection-button">Connect</button>
+    </div>
+    <!-- Add more suggested profiles here -->
+  </div>
+  
+</div>
+
+</body>
+<script>
+  const postsContainer = document.getElementById('content');
+
+  // Fetch posts from the backend API
+  fetch('/doctor/posts')
+      .then(response => response.json())
+      .then(posts => {
+          posts.forEach(post => {
+              // Create and append a post element
+              const postElement = document.createElement('div');
+              postElement.classList.add('post');
+              postElement.innerHTML = `<div class="post-header">
+                  <img src="/img/doctor.png" alt="Profile Picture" class="post-profile-image">
+                  <div class="post-author">
+                    <span class="post-author-name">${post.userId.details.name}</span>
+                    <span class="post-author-title">${post.userId.email}</span>
+                  </div>
+                </div>
+                <p class="post-content">${post.content}</p>
+                <div class="post-actions">
+                  <button class="post-like">Like</button>
+                  <button class="post-comment">Comment</button>
+                  <button class="post-share">Share</button>
+                </div>
+              `;
+              postsContainer.appendChild(postElement);
+          });
+      })
+      .catch(error => {
+          console.error('Error fetching posts:', error);
+      });
+</script>
+</html>

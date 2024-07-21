@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <style>
+        /* CSS Styles for the navigation bar */
+        .navbar {
+            background-color: #0077B5;
+            overflow: hidden;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .navbar-logo:hover {
+            color: #E5E5E5;
+        }
+
+        .navbar-search {
+            border: none;
+            padding: 8px;
+            width: 60%;
+            border-radius: 10px;
+        }
+
+        .navbar-search:focus {
+            outline: none;
+        }
+
+        .navbar a {
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            padding: 10px 15px;
+        }
+
+        .navbar a:hover {
+            background-color: #005E91;
+            border-radius: 4px;
+        }
+
+        /* CSS Styles for the chat application */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #chat-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            width: 100%;
+        }
+
+        #chat-container {
+            display: flex;
+            flex-direction: column;
+            width: 400px;
+            height: 600px;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Styles for the message container and messages */
+        #message-container {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .message {
+            display: flex;
+            margin: 5px 0;
+            max-width: 80%;
+        }
+
+        .message.sent {
+            justify-content: flex-end;
+        }
+
+        .message.received {
+            justify-content: flex-start;
+        }
+
+        .message p {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 0;
+            max-width: 60%;
+            word-wrap: break-word;
+        }
+
+        .message.received p {
+            background-color: #f1f1f1;
+        }
+
+        .message.sent p {
+            background-color: #5a9add;
+        }
+
+        #send-container {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            background-color: #fff;
+        }
+
+        #message-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        #send-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        #send-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <span class="nav-left">
+            <a href="#" class="navbar-logo">MediLance</a>
+            <input type="text" placeholder="Search" class="navbar-search">
+        </span>
+        <span class="nav-right">
+            <a href="#">Home</a>
+            <a href="/doctor/patient">Patients</a>
+            <a href="/doctor/appointment">Appointments</a>
+            <a href="/chat">Messaging</a>
+            <a href="/">Notifications</a>
+            <a href="/signout">Sign Out</a>
+        </span>
+    </div>
+    <div id="chat-wrapper">
+        <div id="chat-container">
+            <div id="message-container">
+                <!-- Messages will be appended here -->
+            </div>
+            <form id="send-container">
+                <input id="message-input" type="text" placeholder="Type a message" autocomplete="off">
+                <button id="send-button" type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io("http://localhost:5000");
+        const messageContainer = document.getElementById('message-container');
+        const messageForm = document.getElementById('send-container');
+        const messageInput = document.getElementById('message-input');
+
+        const username = prompt("Enter your name: ");
+        appendMessage('You joined', 'received');
+
+        socket.emit('new-user', username);
+
+        socket.on('chat-message', data => {
+            appendMessage(data.sender + ": " + data.message, 'received');
+        });
+
+        socket.on('user-connected', username => {
+            appendMessage(username + " joined", 'received');
+        });
+
+        socket.on('user-disconnected', username => {
+            appendMessage(username + " left", 'received');
+        });
+
+        messageForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const message = messageInput.value;
+            appendMessage("You: " + message, 'sent');
+            socket.emit('send-chat-message', message);
+            messageInput.value = '';
+        });
+
+        function appendMessage(message, type) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            if (type === 'sent') {
+                messageElement.classList.add('sent');
+            } else {
+                messageElement.classList.add('received');
+            }
+            const textElement = document.createElement('p');
+            textElement.innerText = message;
+            messageElement.appendChild(textElement);
+            messageContainer.appendChild(messageElement);
+            messageContainer.scrollTop = messageContainer.scrollHeight; // Auto-scroll to the latest message
+        }
+    </script>
+</body>
+</html>
