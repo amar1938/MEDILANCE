@@ -24,6 +24,16 @@ router.post("/saveAppointment", async (req, res) => {
     const combinedDateTime = `${appointment_date}T${appointment_time}:00Z`;
     const appointmentDateTime = new Date(combinedDateTime);
 
+    const existingAppointment = await appointment.findOne({ 
+        doctor: doctor, 
+        timeStamp: appointmentDateTime 
+    });
+
+    if (existingAppointment) {
+        // If there is a conflict, send an error response
+        return res.render("../views/errorpop")
+    }
+    
     await appointment.create({
         doctor: doctor,
         patient: patient,

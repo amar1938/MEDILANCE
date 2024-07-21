@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERROR</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .popup {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+
+        .popup h2 {
+            margin: 0;
+            padding: 10px 0;
+            color: #e74c3c;
+        }
+
+        .popup p {
+            margin: 0;
+            padding: 10px 0;
+            color: #333;
+        }
+
+        .popup-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .popup-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="popup">
+            <h2>FAILED !!!</h2>
+            <p>Your Given Time Slot is already Booked</p>
+            <button type="button" class="popup-btn" onclick="goBack">Back</button>
+        </div>
+    </div>
+    <script>
+        const goBack = () => {
+            app.get('/patient-appointment', (req, res) => {
+    res.render('patient-appointment'); // Assuming you have a patient-appointment.ejs file
+    });
+        }
+    </script>
+</body>
+</html>
