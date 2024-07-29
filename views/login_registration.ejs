@@ -56,7 +56,7 @@
           </div>
 
           <div class="inline-field">
-            <input name="role" value="doctor" type="radio" required/>
+            <input name="role" value="doctor" id="doctor" type="radio" required/>
             <label for="html" class="c-doc">Doctor -</label>
             <div class="input-field amar2">
               <i class="fas fa-user"></i>
@@ -66,7 +66,7 @@
 
           </div>
           <div class="inline-field amar" >
-            <input name="role" value="patient" type="radio" required/>
+            <input name="role" value="patient" id="patient" type="radio" required/>
             <label for="html">Patient</label>
           </div>
 
@@ -106,6 +106,35 @@
     </div>
   </div>
 
+  <script>
+    // Get the radio button and input field elements
+    const doctorRadioButton = document.getElementById('doctor');
+    const patientRadioButton = document.getElementById('patient');
+    const specializationInput = document.getElementById('Specialization');
+
+    // Add an event listener to the radio button
+    patientRadioButton.addEventListener('change', function() {
+        // Check if the radio button is selected
+        if (patientRadioButton.checked) {
+            // Disable the input field
+            specializationInput.disabled = true;
+        } else {
+            // Enable the input field if the radio button is not selected
+            specializationInput.disabled = false;
+        }
+    });
+
+    doctorRadioButton.addEventListener('change', function() {
+        // Check if the radio button is selected
+        if (doctorRadioButton.checked) {
+            // Disable the input field
+            specializationInput.disabled = false;
+        } else {
+            // Enable the input field if the radio button is not selected
+            specializationInput.disabled = true;
+        }
+    });
+</script>
   <script src="app.js"></script>
 </body>
 

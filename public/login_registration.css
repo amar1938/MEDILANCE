@@ -395,9 +395,13 @@ form.sign-in-form {
 }
 .amar{
   height: 30px;
-  width: 300px;
+  width: 327px;
   
 
+}
+
+.post-author-spec{
+  font-size: small;
 }
 .amar2{
   width: 200px;

@@ -22,14 +22,15 @@ export const isRegistered = async(req, res, next)=>{
 }
 
 export const saveUserAccount = async(req,res)=>{
-    const {name, email, phone, dob, password, c_password, role} = req.body;
+    const {name, email, phone, dob, password, specialization, role} = req.body;
     let id = 5;
 
     if(role === "doctor") {
         id = await doctor.create({
             name,
             phone,
-            dob
+            dob,
+            specialization
         });
     } else {
         id = await patient.create({
