@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { type } from 'os';
 
 const userSchema = mongoose.Schema({
     email: {
@@ -71,6 +72,10 @@ const doctorSchema = mongoose.Schema({
     cases: {
         type: Number,
         default: 0
+    },
+    specialization:{
+        type: String,
+        default: null
     }
 });
 

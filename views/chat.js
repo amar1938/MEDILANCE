@@ -1,4 +1,4 @@
-const socket = io("http://localhost:5000");
+const socket = io("mongodb+srv://Medilance:amar1938@medilance.3xojbdf.mongodb.net/");
 const messageContainer = document.getElementById('message-container');
 const messageForm = document.getElementById('send-container');
 const messageInput = document.getElementById('message-input');

@@ -393,7 +393,21 @@ form.sign-in-form {
     transform: translate(-50%, 0);
   }
 }
+.amar{
+  height: 30px;
+  width: 300px;
+  
 
+}
+.amar2{
+  width: 200px;
+}
+.c-doc{
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @media (max-width: 570px) {
   form {
     padding: 0 1.5rem;

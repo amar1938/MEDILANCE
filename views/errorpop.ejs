@@ -71,15 +71,10 @@
         <div class="popup">
             <h2>FAILED !!!</h2>
             <p>Your Given Time Slot is already Booked</p>
-            <button type="button" class="popup-btn" onclick="goBack">Back</button>
+
         </div>
+       
     </div>
-    <script>
-        const goBack = () => {
-            app.get('/patient-appointment', (req, res) => {
-    res.render('patient-appointment'); // Assuming you have a patient-appointment.ejs file
-    });
-        }
-    </script>
+
 </body>
 </html>

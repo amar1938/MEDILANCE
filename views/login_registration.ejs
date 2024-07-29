@@ -31,33 +31,41 @@
           <h2 class="title">Sign Up</h2>
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" name="name" placeholder="Full Name" required/>
+            <input type="text" name="name" placeholder="Full Name *" required/>
           </div>
           <div class="input-field">
             <i class="fas fa-envelope"></i>
-            <input type="email" name="email" placeholder="Email" required/>
+            <input type="email" name="email" placeholder="Email *" required/>
           </div>
           <div class="input-field">
             <i class="fas fa-phone"></i>
-            <input type="text" name="phone" placeholder="Phone Number" required/>
+            <input type="text" name="phone" placeholder="Phone Number *" required/>
           </div>
           <div class="input-field">
             <i class="fas fa-calendar"></i>
-            <input type="date" id="dob" name="dob" placeholder="Date Of Birth" required/>
+            <input type="date" id="dob" name="dob" placeholder="Date Of Birth *" required/>
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="password" name="password" placeholder="Password" required/>
+            <input type="password" name="password" placeholder="Password*" required/>
           </div>
 
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="password" name="c_password" placeholder="Confirm Password" required/>
+            <input type="password" name="c_password" placeholder="Confirm Password*" required/>
           </div>
 
           <div class="inline-field">
             <input name="role" value="doctor" type="radio" required/>
-            <label for="html">Doctor</label>
+            <label for="html" class="c-doc">Doctor -</label>
+            <div class="input-field amar2">
+              <i class="fas fa-user"></i>
+              <input type="text" id = "Specialization" name="specialization" placeholder="Specialization">
+            </div>
+            <br> <!-- This adds a blank line -->
+
+          </div>
+          <div class="inline-field amar" >
             <input name="role" value="patient" type="radio" required/>
             <label for="html">Patient</label>
           </div>
